@@ -1,0 +1,81 @@
+{
+  "name": "Test Server",
+  "post_up_message": "Welcome to Test Server",
+  "gui": false,
+  "memory": "4096",
+  "swap_memory": "8G",
+  "box": "debian/buster64",
+  "box_url": "https://app.vagrantup.com/debian/boxes/buster64",
+  "box_check_update": true,
+  "ssl": "true",
+  "ip": "192.168.1.200",
+  "gui": false,
+  "url": "local.testserver.com",
+  "server": {
+    "admin": "ariksavage@gmail.com",
+    "mail": {
+      "type": "gmail",
+      "sender": "moxyserver@gmail.com",
+      "password": "***************"
+    }
+  },
+  "mysql": {
+    "host": "localhost",
+    "root_pw": "********************",
+    "database": "database_name",
+    "user": {
+      "username": "user",
+      "password": "*****************"
+    }
+  },
+  "web_root": "/var/www/html/web",
+  "synced_folders": [
+    {
+      "host": "../server",
+      "guest": "/var/www/html",
+      "owner": "vagrant",
+      "group": "www-data",
+      "type": "nfs",
+      "dmode": 775,
+      "fmode": 664
+    },
+    {
+    "host": "../db",
+    "guest": "/home/vagrant/db",
+    "owner": "vagrant",
+      "group": "www-data",
+      "type": "nfs",
+      "dmode": 775,
+      "fmode": 764
+    },
+    {
+    "host": "../config",
+    "guest": "/home/vagrant/config",
+    "owner": "vagrant",
+      "group": "www-data",
+      "type": "nfs",
+      "dmode": 775,
+      "fmode": 764
+    }
+  ],
+  "forwarded_ports": [
+    {
+      "guest": 35729,
+      "host": 35729,
+      "protocol": "tcp",
+      "auto_correct": true
+    },
+    {
+      "guest": 8983,
+      "host": 8983,
+      "protocol": "tcp",
+      "auto_correct": true
+    },
+    {
+      "guest": 3306,
+      "host": 3306,
+      "protocol": "tcp",
+      "auto_correct": true
+    }
+  ]
+}
