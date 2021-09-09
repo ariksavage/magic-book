@@ -1,0 +1,21 @@
+{
+	"folders":
+	[
+		{
+      "name": "Root",
+			"path": "."
+		},
+    {
+      "name": "Config",
+      "path": "./config"
+    },
+    {
+      "name": "API",
+      "path": "./api"
+    },
+    {
+      "name": "Angular Src",
+      "path": "./src"
+    }
+	]
+}

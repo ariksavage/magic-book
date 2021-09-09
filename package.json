@@ -3,8 +3,10 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "api": "node api/index.js",
+    "serve": "ng serve",
+    "start": "npm-run-all --parallel api serve",
+    "stop": "pkill --signal SIGINT ng; pkill --signal SIGINT api;",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
