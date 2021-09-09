@@ -4,11 +4,11 @@
   "gui": false,
   "memory": "4096",
   "swap_memory": "8G",
-  "box": "debian/buster64",
-  "box_url": "https://app.vagrantup.com/debian/boxes/buster64",
+  "box": "debian/bullseye64",
+  "box_url": "https://app.vagrantup.com/debian/boxes/bullseye64",
   "box_check_update": true,
   "ssl": "true",
-  "ip": "192.168.1.200",
+  "ip": "192.168.1.001",
   "gui": false,
   "url": "local.testserver.com",
   "server": {
@@ -16,16 +16,16 @@
     "mail": {
       "type": "gmail",
       "sender": "moxyserver@gmail.com",
-      "password": "***************"
+      "password": "************"
     }
   },
   "mysql": {
     "host": "localhost",
-    "root_pw": "********************",
-    "database": "database_name",
+    "root_pw": "****************",
+    "database": "thyme_db",
     "user": {
-      "username": "user",
-      "password": "*****************"
+      "username": "db_admin",
+      "password": "****************"
     }
   },
   "web_root": "/var/www/html/web",
@@ -33,29 +33,17 @@
     {
       "host": "../server",
       "guest": "/var/www/html",
-      "owner": "vagrant",
-      "group": "www-data",
-      "type": "nfs",
-      "dmode": 775,
-      "fmode": 664
+      "type": "nfs"
     },
     {
-    "host": "../db",
-    "guest": "/home/vagrant/db",
-    "owner": "vagrant",
-      "group": "www-data",
-      "type": "nfs",
-      "dmode": 775,
-      "fmode": 764
+      "host": "../db",
+      "guest": "/home/vagrant/db",
+      "type": "nfs"
     },
     {
-    "host": "../config",
-    "guest": "/home/vagrant/config",
-    "owner": "vagrant",
-      "group": "www-data",
-      "type": "nfs",
-      "dmode": 775,
-      "fmode": 764
+      "host": "../config",
+      "guest": "/home/vagrant/config",
+      "type": "nfs"
     }
   ],
   "forwarded_ports": [
