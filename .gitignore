@@ -49,3 +49,6 @@ config/*
 
 db/*
 server/*
+
+
+.angular/*

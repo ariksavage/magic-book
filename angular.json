@@ -1,19 +1,13 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "cli": {
-    "analytics": "07561eb9-0f7f-4780-9b97-98eb94e89715"
-  },
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "base": {
+    "angular-base-update": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
-        },
-        "@schematics/angular:application": {
-          "strict": true
         }
       },
       "root": "",
@@ -23,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/base",
+            "outputPath": "dist/angular-base-update",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -75,10 +69,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "base:build:production"
+              "browserTarget": "angular-base-update:build:production"
             },
             "development": {
-              "browserTarget": "base:build:development"
+              "browserTarget": "angular-base-update:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -86,7 +80,8 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "base:build"
+            "browserTarget": "angular-base-update:build",
+            "proxyConfig": "src/proxy.conf.json"
           }
         },
         "test": {
@@ -110,5 +105,7 @@
       }
     }
   },
-  "defaultProject": "base"
+  "cli": {
+    "analytics": "8084552a-af32-420f-a0b4-4ba3aa85f42d"
+  }
 }

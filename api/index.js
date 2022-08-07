@@ -1,18 +1,29 @@
-const bodyParser = require('body-parser');
-const express = require('express')
-const port = 3000;
+process.title = 'angular api';
 
-const api = express();
-const Database = require('./database.js');
+const bodyParser = require('body-parser');
+const fileUpload = require('express-fileupload');
+const express = require('express');
 const fs = require('fs');
 
+const api = express();
+api.use(fileUpload({
+    useTempFiles : true,
+    tempFileDir : 'tmp/'
+}));
 api.use(bodyParser.urlencoded({ extended: true }));
 api.use(bodyParser.json());
+const port = 4201;
 
-const dbConfigData = fs.readFileSync('config/db.config', {encoding:'utf8', flag:'r'});
+/**
+ * TEST
+ */
 
-dbConfig = JSON.parse(dbConfigData);
-const db = new Database(dbConfig);
+  api.get('/api/test', (req, res) => {
+    res.json({"response": "GET WORKS"});
+  });
 
-api.listen(port)
-console.log(`API is listening at localhost:${port}`);
+  api.post('/api/test', (req, res) => {
+    res.json({"response": "POST WORKS"});
+  });
+
+const server = api.listen(port, () => console.log(`Angular API listening at http://localhost:${port}`));
