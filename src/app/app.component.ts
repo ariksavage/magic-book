@@ -8,13 +8,45 @@ import { ApiService } from './api.service';
 })
 export class AppComponent {
   title = 'angular-base-update';
+  assets: Array<any> = [];
+  playing: string = '';
+  artistI: number = 0;
+  albumI: number = 0;
+  songI: number = 0;
+
 
   constructor(protected api: ApiService) {
-    this.api.get('test').then(response => {
-      console.log('get', response);
+    const self = this;
+    this.api.post('assets/list').then(response => {
+      self.assets = response;
     });
-    this.api.post('test').then(response => {
-      console.log('post', response);
-    });
+  }
+
+  artist(): any {
+    return this.assets[this.artistI];
+  }
+
+  albumPrev() {
+    var i = this.albumI;
+    i = i - 1;
+    i = Math.max(i, 0);
+    this.albumI = i;
+
+    this.songI = 0;
+  }
+
+  albumNext() {
+    var i = this.albumI;
+    i = i + 1;
+    i = Math.min(i, this.artist().children.length - 1);
+    this.albumI = i;
+
+    this.songI = 0;
+  }
+
+  album(): any {
+    if (this.artist()){
+      return this.artist().children[this.albumI];
+    }
   }
 }

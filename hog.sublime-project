@@ -1,0 +1,26 @@
+{
+	"folders":
+	[
+		{
+      "name": "Root",
+			"path": ".",
+      "folder_exclude_patterns": [
+        "src/app",
+        "src/assets",
+        "api"
+      ]
+		},
+    {
+      "name": "App",
+      "path": "src/app"
+    },
+    {
+      "name": "Assets",
+      "path": "src/assets"
+    },
+    {
+      "name": "API",
+      "path": "api"
+    }
+	]
+}

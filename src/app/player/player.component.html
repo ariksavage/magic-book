@@ -1,0 +1,16 @@
+<!-- <ul *ngIf="playlist">
+  <li *ngFor="let track of playlist">{{track.name}}</li>
+</ul> -->
+<h3>{{name()}}</h3>
+<p *ngIf="player">{{currentTimeSeconds()}} / {{durationSeconds()}}</p>
+<audio id="player" #player [attr.src]="src()"></audio>
+<button (click)="play()">play</button>
+<button (click)="pause()">pause</button>
+
+<button (click)="prev()">prev</button>
+<button (click)="next()">next</button>
+
+<input type="range" min="0" max="1" step="0.02" (change)="volumeChange()" [(ngModel)]="volume"/>{{volume * 100}}%
+
+<p *ngIf="sleep">Sleep in: {{parseSeconds(sleep)}}</p>
+<button (click)="sleepTimer()">sleep</button>

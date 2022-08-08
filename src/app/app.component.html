@@ -1,0 +1,13 @@
+<p *ngIf="artist()">Artist: {{artist().name}}</p>
+<p *ngIf="album()"><button (click)="albumPrev()">prev</button>Album: {{album().name}}<button (click)="albumNext()">next</button></p>
+
+<p>
+<!-- <audio id="player" #player controls="controls" [attr.src]="playSrc()">
+
+</audio> -->
+<!-- <audio #player controls="controls" [attr.src]="playSrc()"> -->
+  <p>Song I: {{songI}}</p>
+  <div *ngIf="album()" class="player" [playlist]="album().children" [(i)]="songI"></div>
+
+
+<p>
