@@ -22,6 +22,15 @@ export class AppComponent {
     });
   }
 
+  nextTrack() {
+    this.songI = Math.min(this.songI + 1, this.album().children.length);
+  }
+
+  prevTrack() {
+    this.songI = Math.max(this.songI - 1, 0);
+    // alert('next');
+  }
+
   artist(): any {
     return this.assets[this.artistI];
   }
@@ -48,5 +57,17 @@ export class AppComponent {
     if (this.artist()){
       return this.artist().children[this.albumI];
     }
+  }
+  track(): any {
+    if (this.album()){
+      return this.album().children[this.songI];
+    }
+  }
+
+  src() {
+    return this.track().path.replace('./src','');
+  }
+  trackName() {
+    return this.track().name.replace(/[0-9-\s:]+/,'');
   }
 }

@@ -6,9 +6,9 @@ import { AfterViewInit, Input, Output, EventEmitter, Component, ElementRef} from
   styleUrls: ['./player.component.scss']
 })
 export class PlayerComponent implements AfterViewInit {
-  @Input() playlist!: Array<any>;
-  @Input() i: number = 0;
-  @Output() iChange: EventEmitter<any> = new EventEmitter<any>();
+  @Input() src: string = '';
+  @Output() OnNext: EventEmitter<any> = new EventEmitter<any>();
+  @Output() OnPrev: EventEmitter<any> = new EventEmitter<any>();
   // i: number = 0;
   player: any = null;
   volume: number = 1;
@@ -23,13 +23,8 @@ export class PlayerComponent implements AfterViewInit {
     const self = this;
     this.player = this.elementRef.nativeElement.querySelector('#player');
     this.player.pause();
-    // this.duration = this.player.duration;
     this.player.addEventListener('ended', this.afterTrack.bind(this));
     this.player.addEventListener('timeupdate', this.setTime.bind(this));
-
-    // setInterval(function(){
-    //   self.setTime();
-    // }, 1000);
   }
 
   setTime(){
@@ -60,7 +55,6 @@ export class PlayerComponent implements AfterViewInit {
   }
 
   volumeChange(){
-    // console.log('volume', this.volume);
     this.player.volume = this.volume;
   }
 
@@ -75,7 +69,6 @@ export class PlayerComponent implements AfterViewInit {
   trackChange() {
     const self = this;
     this.setTime();
-    this.iChange.emit(this.i);
     if (this.playing){
       setTimeout(function(){
         self.play();
@@ -84,25 +77,13 @@ export class PlayerComponent implements AfterViewInit {
   }
 
   prev() {
-    this.i = Math.max(0, this.i - 1);
+    this.OnPrev.emit(true);
     this.trackChange();
   }
 
   next() {
-    this.i = Math.min(this.i + 1, this.playlist.length - 1);
+    this.OnNext.emit(true);
     this.trackChange();
-  }
-
-  current() {
-    return this.playlist[this.i];
-  }
-
-  src() {
-    return this.current().path.replace('./src', '');
-  }
-
-  name() {
-    return this.current().name.replace(/^[0-9\s:-]+/m, '');
   }
 
   play() {
