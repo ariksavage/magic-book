@@ -23,23 +23,32 @@ export class PlayerComponent implements AfterViewInit {
     const self = this;
     this.player = this.elementRef.nativeElement.querySelector('#player');
     this.player.pause();
+    // this.duration = this.player.duration;
     this.player.addEventListener('ended', this.afterTrack.bind(this));
+    this.player.addEventListener('timeupdate', this.setTime.bind(this));
 
-    setInterval(function(){
-      self.setTime();
-    }, 1000);
+    // setInterval(function(){
+    //   self.setTime();
+    // }, 1000);
   }
 
   setTime(){
-    this.currentTime = this.player.currentTime;
-    this.duration = this.player.duration;
+    this.currentTime = this.player.currentTime || 0;
+    this.duration = this.player.duration || 0;
   }
 
   parseSeconds(n: number) {
     var s = Math.floor(n);
     var m = Math.floor(s / 60);
-    s = (s - m * 60);
-    return `${m}:${s}`;
+    s = (s - (m * 60));
+
+    var h = Math.floor(m / 60);
+    m = (m - (h * 60));
+    let str = `${("00" + m).slice(-2)}:${("00" + s).slice(-2)}`;
+    if (h > 0){
+      str = `${("00" + h).slice(-2)}:${str}`;
+    }
+    return str;
   }
 
   currentTimeSeconds(){
@@ -57,6 +66,10 @@ export class PlayerComponent implements AfterViewInit {
 
   afterTrack(e: Event){
     this.next();
+  }
+
+  positionChange(){
+    this.player.currentTime = this.currentTime;
   }
 
   trackChange() {

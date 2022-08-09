@@ -3,6 +3,7 @@
 </ul> -->
 <h3>{{name()}}</h3>
 <p *ngIf="player">{{currentTimeSeconds()}} / {{durationSeconds()}}</p>
+<input type="range" min="0" [max]="duration" step="1" (change)="positionChange()" [(ngModel)]="currentTime"/>
 <audio id="player" #player [attr.src]="src()"></audio>
 <button (click)="play()">play</button>
 <button (click)="pause()">pause</button>
