@@ -1,4 +1,4 @@
-<p *ngIf="artist()">{{artist().name}}</p>
-<p *ngIf="album()"><button (click)="albumPrev()">prev</button>{{album().name}}<button (click)="albumNext()">next</button></p>
-<p *ngIf="track()">{{trackName()}}</p>
+<p *ngIf="artist()"><span class="magic-text" [text]="artist().name"></span></p>
+<p *ngIf="album()"><button (click)="albumPrev()">prev</button><span class="magic-text" [text]="album().name"></span><button (click)="albumNext()">next</button></p>
+<p *ngIf="track()"><span class="magic-text" [text]="trackName()"></span></p>
 <div *ngIf="track()" class="player" [src]="src()" (OnPrev)="prevTrack()" (OnNext)="nextTrack()"></div>
