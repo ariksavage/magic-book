@@ -23,6 +23,7 @@ export class PlayerComponent implements AfterViewInit {
     const self = this;
     this.player = this.elementRef.nativeElement.querySelector('#player');
     this.player.pause();
+    this.setTime();
     this.player.addEventListener('ended', this.afterTrack.bind(this));
     this.player.addEventListener('timeupdate', this.setTime.bind(this));
   }

@@ -10,64 +10,98 @@ export class AppComponent {
   title = 'angular-base-update';
   assets: Array<any> = [];
   playing: string = '';
-  artistI: number = 0;
-  albumI: number = 0;
-  songI: number = 0;
-
+  collectionI: number = -1;
+  bookI: number = -1;
+  chapterI: number = 0;
+  page: string = 'collections';
 
   constructor(protected api: ApiService) {
     const self = this;
     this.api.post('assets/list').then(response => {
       self.assets = response;
+      console.log('collection.assets', self.assets);
     });
   }
 
-  nextTrack() {
-    this.songI = Math.min(this.songI + 1, this.album().children.length);
+  setCollection(i: number) {
+    this.collectionI = i;
+    this.page = 'books';
   }
 
-  prevTrack() {
-    this.songI = Math.max(this.songI - 1, 0);
-    // alert('next');
+  setBook(i: number) {
+    this.bookI = i;
+    this.page = 'chapters';
   }
 
-  artist(): any {
-    return this.assets[this.artistI];
+  isHP(text: string): boolean {
+    return text.indexOf('Harry Potter') > -1;
   }
 
-  albumPrev() {
-    var i = this.albumI;
-    i = i - 1;
-    i = Math.max(i, 0);
-    this.albumI = i;
-
-    this.songI = 0;
+  nameFormat(text: string, keepNumber: boolean = false) {
+    const regex = /^(Chapter|chapter|book|Book)*[ -:]*([0-9])+[ -:]*/gm;
+    let name = text;
+    let rep = keepNumber ? '$2: ' : '';
+    name = name.replace(regex, rep);
+    return name;
   }
 
-  albumNext() {
-    var i = this.albumI;
-    i = i + 1;
-    i = Math.min(i, this.artist().children.length - 1);
-    this.albumI = i;
-
-    this.songI = 0;
+  nextChapter() {
+    this.chapterI = Math.min(this.chapterI + 1, this.book().children.length);
   }
 
-  album(): any {
-    if (this.artist()){
-      return this.artist().children[this.albumI];
+  prevChapter() {
+    this.chapterI = Math.max(this.chapterI - 1, 0);
+  }
+
+  collection(): any {
+    if (this.collectionI > -1){
+      return this.assets[this.collectionI];
+    } else {
+      return null;
     }
   }
-  track(): any {
-    if (this.album()){
-      return this.album().children[this.songI];
+
+  selectBook(i: number) {
+    this.bookI = i;
+    this.chapterI = 0;
+  }
+
+  bookPrev() {
+    var i = this.bookI;
+    i = i - 1;
+    i = Math.max(i, 0);
+
+  }
+
+  bookNext() {
+    var i = this.bookI;
+    i = i + 1;
+    i = Math.min(i, this.collection().children.length - 1);
+    this.bookI = i;
+
+    this.chapterI = 0;
+  }
+
+  book(): any {
+    if (this.collection()) {
+      return this.collection().children[this.bookI];
+    } else {
+      return null;
+    }
+  }
+  chapter(): any {
+    if (this.book()){
+      return this.book().children[this.chapterI];
+    } else {
+      return null;
     }
   }
 
   src() {
-    return this.track().path.replace('./src','');
+    return this.chapter().path.replace('./src/assets/library','./assets/Library');
   }
-  trackName() {
-    return this.track().name.replace(/[0-9-\s:]+/,'');
+  chapterName() {
+    return this.chapter().name.replace(/[0-9-\s:]+/,'');
   }
+
 }

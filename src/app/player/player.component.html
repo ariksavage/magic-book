@@ -1,5 +1,5 @@
 <input class="time-tracker" type="range" min="0" [max]="duration" step="1" (change)="positionChange()" [(ngModel)]="currentTime"/>
-<p class="time" *ngIf="player">{{currentTimeSeconds()}} / {{durationSeconds()}}</p>
+<p class="time" *ngIf="player && durationSeconds() !== '00:00'">{{currentTimeSeconds()}} / {{durationSeconds()}}</p>
 
 <div class="controls">
   <button (click)="play()" *ngIf="!playing">play</button>

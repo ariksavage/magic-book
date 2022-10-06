@@ -52,7 +52,7 @@ const getFileList = async (dirName) => {
  */
 
 api.post('/api/assets/list', (req, res) => {
-  getFileList('./src/assets').then((files) => {
+  getFileList('./src/assets/Library').then((files) => {
     res.json(files);
   });
 });

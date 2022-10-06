@@ -1,6 +1,107 @@
-@import url("https://fonts.googleapis.com/css?family=Montserrat&display=swap");
+@font-face {
+    font-family: 'Harry Potter';
+    src: url('../assets/Fonts/harry-p-font/HarryP.eot');
+    src: url('../assets/Fonts/harry-p-font/HarryP.eot?#iefix') format('embedded-opentype'),
+        url('../assets/Fonts/harry-p-font/HarryP.woff2') format('woff2'),
+        url('../assets/Fonts/harry-p-font/HarryP.woff') format('woff'),
+        url('../assets/Fonts/harry-p-font/HarryP.ttf') format('truetype'),
+        url('../assets/Fonts/harry-p-font/HarryP.svg#HarryP') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Bad Script';
+    src: url('../assets/Fonts/bad-script/BadScript-Regular.eot');
+    src: url('../assets/Fonts/bad-script/BadScript-Regular.eot?#iefix') format('embedded-opentype'),
+        url('../assets/Fonts/bad-script/BadScript-Regular.woff2') format('woff2'),
+        url('../assets/Fonts/bad-script/BadScript-Regular.woff') format('woff'),
+        url('../assets/Fonts/bad-script/BadScript-Regular.ttf') format('truetype'),
+        url('../assets/Fonts/bad-script/BadScript-Regular.svg#BadScript') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
 
 :host {
-  font-family: "Montserrat Medium";
+  font-family: 'Bad Script';
   font-size: 36px;
+}
+.harry-potter {
+  font-family: 'Harry Potter';
+}
+.frame {
+  width: 480px;
+  height: 800px;
+  max-height: 100%;
+  box-sizing: border-box;
+  margin: auto;
+  padding: .5em;
+  background: #e5e5be;
+  color: #6b4104;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto auto 1fr auto;
+  grid-template-areas:
+  'title'
+  'chapter'
+  'player'
+  'page'
+  'nav';
+
+  .title {
+    grid-area: title;
+  }
+  .chapter {
+    grid-area: chapter;
+  }
+  .player {
+    grid-area: player;
+    padding: 1em 0;
+  }
+
+  .page {
+    overflow: auto;
+    grid-area: page;
+    padding: 1em 0;
+  }
+
+  .page-nav {
+    grid-area: nav;
+    display: flex;
+
+    button {
+      flex: 1 0 auto;
+      text-align: center;
+      color: inherit;
+      background: transparent;
+      border: none;
+
+      &.active {
+        background: #6b4104;
+        color: #e5e5be;
+      }
+    }
+  }
+}
+
+h1{
+  font-size: 48px;
+  margin: 0 0 0.5em;
+}
+
+h2 {
+  font-size: 36px;
+  margin: 0;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  margin: 0 0 1em;
+  padding: 0;
 }
