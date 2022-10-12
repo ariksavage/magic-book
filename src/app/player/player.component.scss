@@ -3,3 +3,15 @@
   margin: 10px 0;
   width: 100%;
 }
+.volume-sleep {
+  display: flex;
+  width: 100%;
+
+  .volume {
+    flex: 1 0 auto;
+  }
+
+  .sleep {
+    flex: 0 1 auto;
+  }
+}

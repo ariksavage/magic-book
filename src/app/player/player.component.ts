@@ -1,4 +1,5 @@
 import { AfterViewInit, Input, Output, EventEmitter, Component, ElementRef} from '@angular/core';
+import { CookiesService } from '../cookies.service';
 
 @Component({
   selector: '.player',
@@ -16,21 +17,32 @@ export class PlayerComponent implements AfterViewInit {
   currentTime: number = 0;
   duration: number = 0;
   sleep: number = 0;
+  playTimer: any = null;
 
-  constructor(private elementRef:ElementRef) {}
+  constructor(private elementRef:ElementRef, protected cookies: CookiesService) {}
 
   ngAfterViewInit() {
     const self = this;
     this.player = this.elementRef.nativeElement.querySelector('#player');
-    this.player.pause();
-    this.setTime();
+
+    const t = parseFloat(this.cookies.get('time'));
+    self.play();
+    self.pause();
+    this.player.currentTime = t;
+    this.currentTime = this.player.currentTime || 0;
+    this.duration = this.player.duration || 0;
+
     this.player.addEventListener('ended', this.afterTrack.bind(this));
     this.player.addEventListener('timeupdate', this.setTime.bind(this));
+
+
   }
 
   setTime(){
+    const self = this;
     this.currentTime = this.player.currentTime || 0;
     this.duration = this.player.duration || 0;
+    this.cookies.set('time', self.player.currentTime.toString());
   }
 
   parseSeconds(n: number) {
@@ -88,13 +100,18 @@ export class PlayerComponent implements AfterViewInit {
   }
 
   play() {
+    const self = this;
     this.player.play();
     this.playing = true;
+    this.playTimer = setInterval(function(){
+      // self.cookies.set('time', self.currentTime.toString());
+    }, 1000);
   }
 
   pause() {
     this.player.pause();
     this.playing = false;
+    clearTimeout(this.playTimer);
   }
 
   sleepTimer() {

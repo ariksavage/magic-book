@@ -1,13 +1,13 @@
 <div class="frame" class="{{collection() && isHP(collection().name)? 'harry-potter' : ''}}">
-  <h1 class="title">
+  <h1 class="title" *ngIf="page !== 'collections'">
     <span *ngIf="page == 'collections'" class="magic-text" text="Collections"></span>
     <span *ngIf="collection() && !book() && page !== 'collections'" class="magic-text" [text]="collection().name"></span>
     <span *ngIf="book() && page !== 'collections'" class="magic-text" [text]="nameFormat(book().name)"></span>
   </h1>
-  <h2 clall="chapter" *ngIf="chapter()">
-    <span class="magic-text" [text]="nameFormat(chapter().name)"></span>
+  <h2 class="track" *ngIf="track() && page == 'tracks'">
+    <span class="magic-text" [text]="nameFormat(track().name)"></span>
   </h2>
-  <div *ngIf="chapter()" class="player" [src]="src()" (OnPrev)="prevChapter()" (OnNext)="nextChapter()"></div>
+  <div *ngIf="track() && page == 'tracks'" class="player" [src]="src()" (OnPrev)="prevTrack()" (OnNext)="nextTrack()"></div>
   <div class="page">
     <div *ngIf="page == 'collections'">
       <ul class="collection-list">
@@ -19,15 +19,15 @@
         <li *ngFor="let book of collection().children; let b = index" (click)="setBook(b)"><span class="magic-text" [text]="nameFormat(book.name)"></span></li>
       </ul>
     </div>
-    <div *ngIf="page == 'chapters'">
-      <ol class="chapter-list">
-        <li *ngFor="let chapter of book().children; let t = index" (click)="chapterI = t"><span class="magic-text" [text]="nameFormat(chapter.name)"></span></li>
+    <div *ngIf="page == 'tracks'">
+      <ol class="track-list">
+        <li *ngFor="let track of book().children; let t = index" (click)="setTrack(t)"><span class="magic-text" [text]="nameFormat(track.name)"></span></li>
       </ol>
     </div>
   </div>
 <nav class="page-nav">
   <button class="collections {{page == 'collections' ? 'active' : ''}}" (click)="page = 'collections'">Collections</button>
   <button *ngIf="collection()" class="books {{page == 'books' ? 'active' : ''}}" (click)="page = 'books'">Books</button>
-  <button *ngIf="book()" class="chapters {{page == 'chapters' ? 'active' : ''}}" (click)="page = 'chapters'">Chapters</button>
+  <button *ngIf="book()" class="tracks {{page == 'tracks' ? 'active' : ''}}" (click)="page = 'tracks'">Tracks</button>
 </nav>
 </div>

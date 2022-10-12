@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ApiService } from './api.service';
+import { CookiesService } from './cookies.service';
 
 @Component({
   selector: 'app-root',
@@ -12,25 +13,47 @@ export class AppComponent {
   playing: string = '';
   collectionI: number = -1;
   bookI: number = -1;
-  chapterI: number = 0;
+  trackI: number = 0;
   page: string = 'collections';
 
-  constructor(protected api: ApiService) {
+  constructor(protected api: ApiService, protected cookies: CookiesService) {
     const self = this;
     this.api.post('assets/list').then(response => {
       self.assets = response;
-      console.log('collection.assets', self.assets);
+      let c = parseInt(this.cookies.get('collection'));
+      if (c > -1) {
+        this.setCollection(c);
+      }
+      let b = parseInt(this.cookies.get('book'));
+      if (b > -1) {
+        this.setBook(b);
+      }
+      let t = parseInt(this.cookies.get('track'));
+      if (t > -1) {
+        this.setTrack(t);
+      }
     });
   }
 
   setCollection(i: number) {
+    this.cookies.set('collection', i.toString());
     this.collectionI = i;
     this.page = 'books';
+    this.bookI = -1;
+    this.trackI = -1;
   }
 
   setBook(i: number) {
+    this.cookies.set('book', i.toString());
     this.bookI = i;
-    this.page = 'chapters';
+    this.page = 'tracks';
+    this.trackI = -1;
+    this.setTrack(0);
+  }
+
+  setTrack(i: number) {
+    this.cookies.set('track', i.toString());
+    this.trackI = i;
   }
 
   isHP(text: string): boolean {
@@ -38,19 +61,21 @@ export class AppComponent {
   }
 
   nameFormat(text: string, keepNumber: boolean = false) {
-    const regex = /^(Chapter|chapter|book|Book)*[ -:]*([0-9])+[ -:]*/gm;
+    const regex = /^(Chapter|chapter|Track|track|book|Book)*[ -:]*([0-9])+[ -:]*/gm;
     let name = text;
     let rep = keepNumber ? '$2: ' : '';
     name = name.replace(regex, rep);
     return name;
   }
 
-  nextChapter() {
-    this.chapterI = Math.min(this.chapterI + 1, this.book().children.length);
+  nextTrack() {
+    const i = Math.min(this.trackI + 1, this.book().children.length);
+    this.setTrack(i);
   }
 
-  prevChapter() {
-    this.chapterI = Math.max(this.chapterI - 1, 0);
+  prevTrack() {
+    const i = Math.max(this.trackI - 1, 0);
+    this.setTrack(i);
   }
 
   collection(): any {
@@ -59,11 +84,6 @@ export class AppComponent {
     } else {
       return null;
     }
-  }
-
-  selectBook(i: number) {
-    this.bookI = i;
-    this.chapterI = 0;
   }
 
   bookPrev() {
@@ -79,29 +99,32 @@ export class AppComponent {
     i = Math.min(i, this.collection().children.length - 1);
     this.bookI = i;
 
-    this.chapterI = 0;
+    this.trackI = 0;
   }
 
   book(): any {
     if (this.collection()) {
       return this.collection().children[this.bookI];
+      this.trackI = 0;
     } else {
       return null;
     }
   }
-  chapter(): any {
+
+  track(): any {
     if (this.book()){
-      return this.book().children[this.chapterI];
+      return this.book().children[this.trackI];
     } else {
       return null;
     }
   }
 
   src() {
-    return this.chapter().path.replace('./src/assets/library','./assets/Library');
+    return this.track().path.replace('./src/assets/Library','./assets/Library').replace("'",'%27');
   }
-  chapterName() {
-    return this.chapter().name.replace(/[0-9-\s:]+/,'');
+
+  trackName() {
+    return this.track().name.replace(/[0-9-\s:]+/,'');
   }
 
 }
