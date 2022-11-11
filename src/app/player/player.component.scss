@@ -1,17 +1,80 @@
+@import "../../../node_modules/%40fortawesome/fontawesome-free/scss/solid";
 .time-tracker {
-  height: 39px;
-  margin: 10px 0;
+  // height: 39px;
   width: 100%;
+  margin: 0 0 0.5em;
 }
-.volume-sleep {
-  display: flex;
-  width: 100%;
 
-  .volume {
-    flex: 1 0 auto;
+.time {
+  font-size: 24px;
+  margin: 0 0 0.5em;
+  text-align: right;
+}
+
+.sleep {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  .sleep-options {
+    display: flex;
+    flex: 0 1 auto;
+    margin: 0 0 1em;
+    justify-content: space-between;
+    width: 100%;
+
+    button {
+      flex: 1 0 auto;
+    }
   }
 
-  .sleep {
+  .sleep-toggle {
     flex: 0 1 auto;
   }
+}
+
+.sleep-timer {
+  flex: 1 0 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin: 0 0 1em;
+
+  p {
+    flex: 1 0 100%;
+    margin: 0;
+  }
+}
+
+.volume {
+  width: 100%;
+  display: flex;
+
+  .volume-control {
+    flex: 1 0 auto;
+  }
+}
+
+button {
+  padding: 1em 2em;
+  background: transparent;
+  margin: 0;
+  border: none;
+  text-align: center;
+  white-space: nowrap;
+  border: 1px solid #6b4104;
+  color: #6b4104;
+  line-height: 0;
+
+  &.active {
+    background: #6b4104;
+    color: #e5e5be;
+  }
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 0 0.5em;
 }

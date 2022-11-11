@@ -22,48 +22,59 @@ export class AppComponent {
       self.assets = response;
       let c = parseInt(this.cookies.get('collection'));
       if (c > -1) {
-        this.setCollection(c);
+        this.setCollection(c, true);
+        this.page = 'books';
       }
       let b = parseInt(this.cookies.get('book'));
       if (b > -1) {
-        this.setBook(b);
+        this.setBook(b, true);
+        this.page = 'tracks';
       }
       let t = parseInt(this.cookies.get('track'));
       if (t > -1) {
-        this.setTrack(t);
+        this.setTrack(t, true);
+        this.page = 'tracks';
       }
     });
   }
 
-  setCollection(i: number) {
-    this.cookies.set('collection', i.toString());
+  setCollection(i: number, init: boolean = false) {
     this.collectionI = i;
-    this.page = 'books';
-    this.bookI = -1;
-    this.trackI = -1;
+    if (!init) {
+      this.cookies.set('collection', i.toString());
+      this.page = 'books';
+    }
+    this.setBook(-1, init);
+    this.setTrack(-1, init);
+    console.log('collection', this.collection());
   }
 
-  setBook(i: number) {
-    this.cookies.set('book', i.toString());
+  setBook(i: number, init: boolean =  false) {
     this.bookI = i;
-    this.page = 'tracks';
-    this.trackI = -1;
-    this.setTrack(0);
+    this.setTrack(0, init);
+    if (!init){
+      this.cookies.set('book', i.toString());
+      if (i > -1){
+        this.page = 'tracks';
+      }
+    }
   }
 
-  setTrack(i: number) {
-    this.cookies.set('track', i.toString());
+  setTrack(i: number, init: boolean =  false) {
+    if (!init){
+      this.cookies.set('track', i.toString());
+    }
     this.trackI = i;
   }
 
-  isHP(text: string): boolean {
-    return text.indexOf('Harry Potter') > -1;
+  isHP(): boolean {
+    return this.collection().name.indexOf('Harry Potter') > -1;
   }
 
   nameFormat(text: string, keepNumber: boolean = false) {
     const regex = /^(Chapter|chapter|Track|track|book|Book)*[ -:]*([0-9])+[ -:]*/gm;
     let name = text;
-    let rep = keepNumber ? '$2: ' : '';
+    let rep = keepNumber ? '$2. ' : '';
     name = name.replace(regex, rep);
     return name;
   }

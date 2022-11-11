@@ -16,26 +16,25 @@ export class PlayerComponent implements AfterViewInit {
   playing: boolean = false;
   currentTime: number = 0;
   duration: number = 0;
+  sleepMax: number = 60 * 60; // 1 hr in seconds
   sleep: number = 0;
   playTimer: any = null;
+  showSleepOptions: boolean = false;
 
   constructor(private elementRef:ElementRef, protected cookies: CookiesService) {}
 
   ngAfterViewInit() {
     const self = this;
     this.player = this.elementRef.nativeElement.querySelector('#player');
+     setTimeout(() => {
+      const t = parseFloat(self.cookies.get('time'));
+      self.player.currentTime = t;
+      self.currentTime = self.player.currentTime || 0;
+      self.duration = self.player.duration || 0;
 
-    const t = parseFloat(this.cookies.get('time'));
-    self.play();
-    self.pause();
-    this.player.currentTime = t;
-    this.currentTime = this.player.currentTime || 0;
-    this.duration = this.player.duration || 0;
-
-    this.player.addEventListener('ended', this.afterTrack.bind(this));
-    this.player.addEventListener('timeupdate', this.setTime.bind(this));
-
-
+      self.player.addEventListener('ended', self.afterTrack.bind(self));
+      self.player.addEventListener('timeupdate', self.setTime.bind(self));
+     });
   }
 
   setTime(){
@@ -43,6 +42,24 @@ export class PlayerComponent implements AfterViewInit {
     this.currentTime = this.player.currentTime || 0;
     this.duration = this.player.duration || 0;
     this.cookies.set('time', self.player.currentTime.toString());
+  }
+
+  toggleSleepOptions() {
+    this.showSleepOptions = !this.showSleepOptions;
+  }
+
+  setSleep(m: number) {
+    const self = this;
+    self.sleepMax = m * 60; // convert minutes to seconds
+  }
+
+  setSleepMinus(m: number) {
+    const self = this;
+    self.sleep -= (m * 60); // convert minutes to seconds
+  }
+  setSleepPlus(m: number) {
+    const self = this;
+    self.sleep += (m * 60); // convert minutes to seconds
   }
 
   parseSeconds(n: number) {
@@ -103,9 +120,6 @@ export class PlayerComponent implements AfterViewInit {
     const self = this;
     this.player.play();
     this.playing = true;
-    this.playTimer = setInterval(function(){
-      // self.cookies.set('time', self.currentTime.toString());
-    }, 1000);
   }
 
   pause() {
@@ -114,12 +128,12 @@ export class PlayerComponent implements AfterViewInit {
     clearTimeout(this.playTimer);
   }
 
-  sleepTimer() {
-    if (!this.playing){
+  sleepTimerStart() {
+    if (!this.playing) {
       this.play();
     }
     const self = this;
-    this.sleep = 5; // seconds
+    self.sleep = self.sleepMax;
     const sleepInt = setInterval(function(){
       self.sleep = self.sleep - 1;
       if (self.sleep == 0){
@@ -127,5 +141,9 @@ export class PlayerComponent implements AfterViewInit {
         clearInterval(sleepInt);
       }
     }, 1000);
+  }
+  sleepTimerStop() {
+    const self = this;
+    self.sleep = 1;
   }
 }

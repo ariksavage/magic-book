@@ -1,18 +1,33 @@
-<input class="time-tracker" type="range" min="0" [max]="duration" step="1" (change)="positionChange()" [(ngModel)]="currentTime"/>
+<input *ngIf="currentTime > -1" class="time-tracker" type="range" min="0" [max]="duration" step="1" (change)="positionChange()" [(ngModel)]="currentTime"/>
 <p class="time" *ngIf="player && durationSeconds() !== '00:00'">{{currentTimeSeconds()}} / {{durationSeconds()}}</p>
 
 <div class="controls">
-  <i class="fas fa-solid fa-play"></i>
-  <button (click)="play()" *ngIf="!playing">play <i class="fa-solid fa-play"></i></button>
-  <button (click)="pause()" *ngIf="playing">pause</button>
-  <button (click)="prev()">prev</button>
-  <button (click)="next()">next</button>
+  <button class="sleep-options" (click)="toggleSleepOptions()"><i class="icon" icon="clock"></i></button>
+  <button *ngIf="!sleep" class="sleep-toggle" (click)="sleepTimerStart()"><i class="icon" icon="sleep"></i></button>
+  <button *ngIf="sleep" class="sleep-toggle" (click)="sleepTimerStop()"><i class="icon" icon="sleep-stop"></i></button>
+  <button (click)="play()" *ngIf="!playing"><i class="icon" icon="play"></i></button>
+  <button (click)="pause()" *ngIf="playing"><i class="icon" icon="pause"></i></button>
+  <button (click)="prev()"><i class="icon" icon="prev"></i></button>
+  <button (click)="next()"><i class="icon" icon="next"></i></button>
 </div>
-<div class="volume-sleep">
-<input class="volume" type="range" min="0" max="1" step="0.02" (change)="volumeChange()" [(ngModel)]="volume"/>{{volume * 100}}%
+<div class="sleep">
 
-<p class="sleep-timer" *ngIf="sleep">Sleep in: {{parseSeconds(sleep)}}</p>
-<button class="sleep" (click)="sleepTimer()">sleep</button>
+  <div class="sleep-options" *ngIf="showSleepOptions">
+    <button class="{{sleepMax == 30 * 60 ? 'active' : ''}}" (click)="setSleep(30)">30 min</button>
+    <button class="{{sleepMax == 45 * 60 ? 'active' : ''}}" (click)="setSleep(45)">45 min</button>
+    <button class="{{sleepMax == 60 * 60 ? 'active' : ''}}" (click)="setSleep(60)">1 hr</button>
+    <button class="{{sleepMax == 120 * 60 ? 'active' : ''}}" (click)="setSleep(120)">2 hr</button>
+  </div>
+  <div class="sleep-timer" *ngIf="sleep">
+    <p>Sleep:</p>
+    <button class="sleep-adjust" (click)="setSleepMinus(10)">- 10 min</button>
+    <span class="time-to-sleep">{{parseSeconds(sleep)}}</span>
+    <button class="sleep-adjust" (click)="setSleepPlus(10)">+ 10 min</button>
+  </div>
+</div>
+
+<div class="volume">
+<input class="volume-control" type="range" min="0" max="1" step="0.02" (change)="volumeChange()" [(ngModel)]="volume"/>{{volume * 100}}%
 </div>
 
 <audio id="player" #player [attr.src]="src"></audio>

@@ -7,12 +7,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PlayerComponent } from './player/player.component';
 import { MagicTextComponent } from './magic-text/magic-text.component';
+import { IconComponent } from './icon/icon.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PlayerComponent,
-    MagicTextComponent
+    MagicTextComponent,
+    IconComponent
   ],
   imports: [
     BrowserModule,
