@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/angular-base-update",
+            "outputPath": "dist",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -42,8 +42,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "20kb",
+                  "maximumError": "100kb"
                 }
               ],
               "fileReplacements": [
@@ -72,7 +72,8 @@
               "browserTarget": "angular-base-update:build:production"
             },
             "development": {
-              "browserTarget": "angular-base-update:build:development"
+              "browserTarget": "angular-base-update:build:development",
+               "proxyConfig": "src/proxy-local.conf.json"
             }
           },
           "defaultConfiguration": "development"
@@ -81,7 +82,6 @@
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
             "browserTarget": "angular-base-update:build",
-            "proxyConfig": "src/proxy.conf.json"
           }
         },
         "test": {

@@ -8,7 +8,7 @@
     display: inline-block;
   }
 
-  @for $i from 1 through 5000 {
+  @for $i from 1 through 100 {
     &:nth-child(#{$i}) {
       animation: fade-in
         1s
