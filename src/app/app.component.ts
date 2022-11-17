@@ -46,7 +46,6 @@ export class AppComponent {
     }
     this.setBook(-1, init);
     this.setTrack(-1, init);
-    console.log('collection', this.collection());
   }
 
   setBook(i: number, init: boolean =  false) {
