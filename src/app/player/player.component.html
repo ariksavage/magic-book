@@ -2,7 +2,8 @@
 <p class="time" *ngIf="player && durationSeconds() !== '00:00'">{{currentTimeSeconds()}} / {{durationSeconds()}}</p>
 
 <div class="controls">
-  <button class="sleep-options" (click)="toggleSleepOptions()"><i class="icon" icon="clock"></i></button>
+  <button class="sleep-options {{showSleepOptions ? 'open' : ''}}" (click)="toggleSleepOptions()"><i class="icon" icon="clock"></i></button>
+
   <button *ngIf="!sleep" class="sleep-toggle" (click)="sleepTimerStart()"><i class="icon" icon="sleep"></i></button>
   <button *ngIf="sleep" class="sleep-toggle" (click)="sleepTimerStop()"><i class="icon" icon="sleep-stop"></i></button>
   <button (click)="play()" *ngIf="!playing"><i class="icon" icon="play"></i></button>
@@ -13,13 +14,15 @@
 <div class="sleep">
 
   <div class="sleep-options" *ngIf="showSleepOptions">
+    <h2 class="popup-title">Sleep Timer length:</h2>
     <button class="{{sleepMax == 30 * 60 ? 'active' : ''}}" (click)="setSleep(30)">30 min</button>
     <button class="{{sleepMax == 45 * 60 ? 'active' : ''}}" (click)="setSleep(45)">45 min</button>
     <button class="{{sleepMax == 60 * 60 ? 'active' : ''}}" (click)="setSleep(60)">1 hr</button>
     <button class="{{sleepMax == 120 * 60 ? 'active' : ''}}" (click)="setSleep(120)">2 hr</button>
+    <button class="start-sleep-timer" (click)="startSleepTimer()">Start Sleep Timer</button>
   </div>
   <div class="sleep-timer" *ngIf="sleep">
-    <p>Sleep:</p>
+    <p>Sleep in:</p>
     <button class="sleep-adjust" (click)="setSleepMinus(10)">- 10 min</button>
     <span class="time-to-sleep">{{parseSeconds(sleep)}}</span>
     <button class="sleep-adjust" (click)="setSleepPlus(10)">+ 10 min</button>

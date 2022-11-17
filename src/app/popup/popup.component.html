@@ -1,0 +1,9 @@
+<button class="toggle-button {{open ? 'open' : ''}}"(click)="toggle()"><ng-content select="[button]"></ng-content></button>
+<div class="popup" *ngIf="open">
+  <div class="popup-header">
+    <h2 class="popup-title" *ngIf="title">{{title}}</h2>
+    <button class="close-btn" (click)="open = false"><i class="icon" icon="x"></i></button>
+  </div>
+<div class="popup-content" >
+  <ng-content select="[content]"></ng-content>
+</div>

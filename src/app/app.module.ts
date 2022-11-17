@@ -8,13 +8,15 @@ import { AppComponent } from './app.component';
 import { PlayerComponent } from './player/player.component';
 import { MagicTextComponent } from './magic-text/magic-text.component';
 import { IconComponent } from './icon/icon.component';
+import { PopupComponent } from './popup/popup.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PlayerComponent,
     MagicTextComponent,
-    IconComponent
+    IconComponent,
+    PopupComponent
   ],
   imports: [
     BrowserModule,

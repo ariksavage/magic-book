@@ -53,6 +53,11 @@ export class PlayerComponent implements AfterViewInit {
     self.sleepMax = m * 60; // convert minutes to seconds
   }
 
+  startSleepTimer() {
+    this.sleepTimerStart();
+    this.showSleepOptions = false;
+  }
+
   setSleepMinus(m: number) {
     const self = this;
     self.sleep -= (m * 60); // convert minutes to seconds
