@@ -41,8 +41,8 @@ export class PlayerComponent implements AfterViewInit {
 
   setTime() {
     const self = this;
-    this.currentTime = this.player.currentTime || 0;
-    this.duration = this.player.duration || 0;
+    this.currentTime = this.player.currentTime ? this.player.currentTime : 0;
+    this.duration = this.player.duration ? this.player.duration : 0;
     this.cookies.set('time', self.player.currentTime.toString());
   }
 

@@ -2,7 +2,9 @@
 body {
   margin: 0;
 }
-::-webkit-scrollbar {
+::-moz-scrollbar,
+::-webkit-scrollbar,
+::-o-scrollbar {
   width: 0px;
   background: transparent; /* make scrollbar transparent */
 }
