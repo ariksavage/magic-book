@@ -8,7 +8,7 @@ function get_dir_contents($root, $root_sub = null){
   foreach($dirs as $dir){
     if ($dir[0] !== '.'){
       $item = new stdClass();
-      $item->name = $dir;
+      $item->name = explode('.', $dir)[0];
       $path = $root . '/' . $dir;
       if (is_dir($path)){
         $item->children = get_dir_contents($path);

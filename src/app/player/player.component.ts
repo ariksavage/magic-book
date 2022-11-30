@@ -27,17 +27,19 @@ export class PlayerComponent implements AfterViewInit {
     const self = this;
     this.player = this.elementRef.nativeElement.querySelector('#player');
      setTimeout(() => {
-      const t = parseFloat(self.cookies.get('time'));
+      let t = parseFloat(self.cookies.get('time'));
+      if (isNaN(t)) {
+        t = 0;
+      }
       self.player.currentTime = t;
-      self.currentTime = self.player.currentTime || 0;
-      self.duration = self.player.duration || 0;
+      self.duration = t;
 
       self.player.addEventListener('ended', self.afterTrack.bind(self));
       self.player.addEventListener('timeupdate', self.setTime.bind(self));
      });
   }
 
-  setTime(){
+  setTime() {
     const self = this;
     this.currentTime = this.player.currentTime || 0;
     this.duration = this.player.duration || 0;
@@ -56,6 +58,10 @@ export class PlayerComponent implements AfterViewInit {
   startSleepTimer() {
     this.sleepTimerStart();
     this.showSleepOptions = false;
+  }
+
+  displayVolume() {
+    return Math.floor(this.volume * 100) + '%';
   }
 
   setSleepMinus(m: number) {
@@ -81,23 +87,23 @@ export class PlayerComponent implements AfterViewInit {
     return str;
   }
 
-  currentTimeSeconds(){
+  currentTimeSeconds() {
     return this.parseSeconds(this.currentTime);
   }
 
-  durationSeconds(){
+  durationSeconds() {
     return this.parseSeconds(this.duration);
   }
 
-  volumeChange(){
+  volumeChange() {
     this.player.volume = this.volume;
   }
 
-  afterTrack(e: Event){
+  afterTrack(e: Event) {
     this.next();
   }
 
-  positionChange(){
+  positionChange() {
     this.player.currentTime = this.currentTime;
   }
 

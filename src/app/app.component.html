@@ -28,6 +28,6 @@
   <nav class="page-nav">
     <button class="collections {{page == 'collections' ? 'active' : ''}}" (click)="page = 'collections'">Collections</button>
     <button *ngIf="collection()" class="books {{page == 'books' ? 'active' : ''}}" (click)="page = 'books'">Books</button>
-    <button *ngIf="book()" class="tracks {{page == 'tracks' ? 'active' : ''}}" (click)="page = 'tracks'">Tracks</button>
+    <button *ngIf="book()" class="tracks {{page == 'tracks' ? 'active' : ''}}" (click)="page = 'tracks'">Chapters</button>
   </nav>
 </div>
