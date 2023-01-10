@@ -1,3 +1,4 @@
+
 <div class="frame" class="{{collection() && isHP()? 'harry-potter' : ''}}">
   <h1 class="title" *ngIf="page !== 'collections'">
     <span *ngIf="page == 'collections'" class="magic-text" text="Collections"></span>
@@ -9,17 +10,17 @@
   </h2>
   <div *ngIf="track() && page == 'tracks'" class="player" [src]="src()" (OnPrev)="prevTrack()" (OnNext)="nextTrack()"></div>
   <div class="page">
-    <div *ngIf="page == 'collections' && assets" class="page collections-page">
+    <div *ngIf="page == 'collections' && assets && !inAction" class="page collections-page">
       <ul class="list collection-list">
         <li *ngFor="let collection of assets; let c = index" (click)="setCollection(c)"><span class="magic-text" [text]="collection.name"></span></li>
       </ul>
     </div>
-    <div *ngIf="page == 'books'" class="books-page">
+    <div *ngIf="page == 'books' && !inAction" class="books-page">
       <ul class="list book-list" *ngIf="collection().children">
         <li *ngFor="let book of collection().children; let b = index" (click)="setBook(b)"><span class="magic-text" [text]="nameFormat(book.name)"></span></li>
       </ul>
     </div>
-    <div *ngIf="page == 'tracks'" class="tracks-page">
+    <div *ngIf="page == 'tracks' && !inAction" class="tracks-page">
       <ol class="list track-list" *ngIf="book() && book().children">
         <li *ngFor="let track of book().children; let t = index" (click)="setTrack(t)" class="{{t == trackI ? 'current-item' : ''}}" ><span class="magic-text" [text]="nameFormat(track.name)"></span></li>
       </ol>

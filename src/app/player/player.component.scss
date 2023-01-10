@@ -75,8 +75,19 @@ button.open {
   }
 }
 
+.lights-out {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  height: 100vh;
+  width: 100vw;
+  background: rgba(0, 0, 0, 0.95);
+}
 .sleep-timer {
   // @extend %popup;
+  position: relative;
+  z-index: 20;
   flex: 1 0 100%;
   display: flex;
   justify-content: space-between;
@@ -104,7 +115,7 @@ button.open {
 }
 
 button {
-  padding: 1em 2em;
+  padding: 0.5em 1em;
   background: transparent;
   margin: 0;
   border: none;

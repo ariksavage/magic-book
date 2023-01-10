@@ -20,6 +20,7 @@ export class PlayerComponent implements AfterViewInit {
   sleep: number = 0;
   playTimer: any = null;
   showSleepOptions: boolean = false;
+  lightsOut: boolean = false;
 
   constructor(private elementRef:ElementRef, protected cookies: CookiesService) {}
 
@@ -58,6 +59,7 @@ export class PlayerComponent implements AfterViewInit {
   startSleepTimer() {
     this.sleepTimerStart();
     this.showSleepOptions = false;
+
   }
 
   displayVolume() {
@@ -140,6 +142,7 @@ export class PlayerComponent implements AfterViewInit {
   }
 
   sleepTimerStart() {
+    this.lightsOut = true;
     if (!this.playing) {
       this.play();
     }

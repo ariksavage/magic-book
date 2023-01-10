@@ -6,11 +6,13 @@
 
   <button *ngIf="!sleep" class="sleep-toggle" (click)="sleepTimerStart()"><i class="icon" icon="sleep"></i></button>
   <button *ngIf="sleep" class="sleep-toggle" (click)="sleepTimerStop()"><i class="icon" icon="sleep-stop"></i></button>
+  <button (click)="lightsOut = true"><i class="icon" icon="lightbulb"></i></button>
   <button (click)="play()" *ngIf="!playing"><i class="icon" icon="play"></i></button>
   <button (click)="pause()" *ngIf="playing"><i class="icon" icon="pause"></i></button>
   <button (click)="prev()"><i class="icon" icon="prev"></i></button>
   <button (click)="next()"><i class="icon" icon="next"></i></button>
 </div>
+<div class="lights-out" *ngIf="lightsOut" (click)="lightsOut = false"></div>
 <div class="sleep">
 
   <div class="sleep-options" *ngIf="showSleepOptions">

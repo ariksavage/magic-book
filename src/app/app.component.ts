@@ -1,12 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ApiService } from './api.service';
 import { CookiesService } from './cookies.service';
+import { PlayerComponent } from './player/player.component';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
+
 export class AppComponent {
   title = 'angular-base-update';
   assets: Array<any> = [];
@@ -15,6 +17,11 @@ export class AppComponent {
   bookI: number = -1;
   trackI: number = 0;
   page: string = 'collections';
+  inAction: boolean  = false;
+
+
+  @ViewChild(PlayerComponent)
+  private playerComponent!: PlayerComponent;
 
   constructor(protected api: ApiService, protected cookies: CookiesService) {
     const self = this;
@@ -36,6 +43,11 @@ export class AppComponent {
         this.page = 'tracks';
       }
     });
+  }
+
+  pausePlayer() {
+    console.log('pause');
+    this.playerComponent.pause();
   }
 
   setCollection(i: number, init: boolean = false) {
@@ -60,10 +72,18 @@ export class AppComponent {
   }
 
   setTrack(i: number, init: boolean =  false) {
+    const self = this;
+    self.inAction = true;
+    if (this.playerComponent){
+      this.playerComponent.trackChange();
+    }
     if (!init){
       this.cookies.set('track', i.toString());
     }
     this.trackI = i;
+    setTimeout(function(){
+      self.inAction = false;
+    }, 200);
   }
 
   isHP(): boolean {
