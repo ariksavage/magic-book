@@ -91,7 +91,7 @@ export class AppComponent {
   }
 
   nameFormat(text: string, keepNumber: boolean = false) {
-    const regex = /^(Chapter|chapter|Track|track|book|Book)*[ -:]*([0-9])+[ -:]*/gm;
+    const regex = /^(Chapter|chapter|Track|track|book|Book)*[\-: ]*([0-9]+)[\-: ]*/gm;
     let name = text;
     let rep = keepNumber ? '$2. ' : '';
     name = name.replace(regex, rep);

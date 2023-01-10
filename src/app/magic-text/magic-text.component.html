@@ -1,4 +1,4 @@
-<span *ngFor ="let word of words()" class="word">
+<span *ngFor ="let word of words()" class="word {{word|lowercase}}">
   <span *ngFor="let letter of letters(word)" class="letter">{{letter}}</span>
   <span class="letter space"> </span>
 </span>
